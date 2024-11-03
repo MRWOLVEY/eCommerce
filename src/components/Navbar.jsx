@@ -1,8 +1,10 @@
 import React from "react";
+import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { assets } from "../../public/assets/frontend_assets/assets";
 
 const Navbar = () => {
+  const [visible, setVisible] = useState(false);
   return (
     <div className="flex items-center justify-between py-5 font-medium border-b-2">
       <img src={assets.logo} className="w-36" alt="logo" />
@@ -50,6 +52,53 @@ const Navbar = () => {
             10
           </p>
         </Link>
+        <img
+          src={assets.menu_icon}
+          alt="menu"
+          className="w-5 cursor-pointer sm:hidden"
+          onClick={() => setVisible(true)}
+        />
+      </div>
+      <div
+        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? "w-full" : "w-0"}`}
+      >
+        <div className="flex flex-col text-gray-600">
+          <div
+            className="flex items-center gap-4 p-3 bg-black cursor-pointer"
+            onClick={() => setVisible(false)}
+          >
+            <img src={assets.dropdown_icon} className="h-4 rotate-180" />
+            <p className="text-slate-100">Back</p>
+          </div>
+          <NavLink
+            onClick={() => setVisible(false)}
+            to="/"
+            className="py-2 pl-6 border"
+          >
+            HOME
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            to="/collection"
+            className="py-2 pl-6 border"
+          >
+            COLLECTION
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            to="/about"
+            className="py-2 pl-6 border"
+          >
+            ABOUT
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            to="/contact"
+            className="py-2 pl-6 border"
+          >
+            CONTACT
+          </NavLink>
+        </div>
       </div>
     </div>
   );
