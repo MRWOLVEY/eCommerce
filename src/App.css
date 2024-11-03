@@ -1,0 +1,5 @@
+a.active hr,a:not(.active):hover hr{
+    width: 50%;
+    transition: ease-in;
+    transition-duration: 110ms;
+}

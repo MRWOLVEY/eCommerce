@@ -10,8 +10,6 @@ import PlaceOrder from './pages/PlaceOrder'
 import Product from './pages/Product'
 
 import Navbar from './components/Navbar'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
