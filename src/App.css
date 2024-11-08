@@ -1,5 +1,13 @@
-a.active hr,a:not(.active):hover hr{
-    width: 50%;
-    transition: ease-in;
-    transition-duration: 110ms;
+a.active hr,
+a:not(.active):hover hr {
+  width: 50%;
+  transition: ease-in;
+  transition-duration: 110ms;
+}
+
+@media (max-width: 640px) {
+  a.active {
+    background-color: rgba(0, 0, 0, 0.352);
+    color: white;
+  }
 }
