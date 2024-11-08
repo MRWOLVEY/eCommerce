@@ -1,12 +1,14 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { assets } from "../../public/assets/frontend_assets/assets";
+import { ShopContext } from "../contexts/ShopContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
+  const { state } = useContext(ShopContext);
   return (
-    <div className="flex items-center justify-between py-5 font-medium border-b-2">
+    <div className="flex items-center justify-between py-5 font-medium border-b-2 mb-4">
       <img src={assets.logo} className="w-36" alt="logo" />
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
         <NavLink to="/" className="flex flex-col items-center gap-1">
@@ -49,7 +51,7 @@ const Navbar = () => {
         <Link to="/cart" className="relative">
           <img src={assets.cart_icon} className="w-5 min-w-5" alt="cart" />
           <p className="absolute -right-1 -bottom-1 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
-            10
+            {state.cartProductsCount}
           </p>
         </Link>
         <img
