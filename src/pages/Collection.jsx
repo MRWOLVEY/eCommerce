@@ -1,11 +1,67 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../contexts/ShopContext'
 import classNames from 'classnames'
 import { assets } from '../../public/assets/frontend_assets/assets'
+import Title from '../components/Title'
+import ProductItem from '../components/ProductItem'
 
 const Collection = () => {
   const { products } = useContext(ShopContext)
   const [showFilter, setShowFilter] = useState(false)
+  const [filteredProducts, setFilteredProducts] = useState([])
+  const [category, setCategory] = useState([])
+  const [subcategory, setSubcategory] = useState([])
+  const [sortType, setSortType] = useState('relevant')
+
+  const toggleCat = (e) => {
+    if (category.includes(e.target.value)) {
+      setCategory((prev) => prev.filter((item) => item != e.target.value))
+    } else {
+      setCategory((prev) => [...prev, e.target.value])
+    }
+  }
+  const toggleSubCat = (e) => {
+    if (subcategory.includes(e.target.value)) {
+      setSubcategory((prev) => prev.filter((item) => item != e.target.value))
+    } else {
+      setSubcategory((prev) => [...prev, e.target.value])
+    }
+  }
+
+  const applyFilter = () => {
+    let productsCopy = products.slice()
+    if (category.length > 0) {
+      productsCopy = productsCopy.filter((product) => category.includes(product.category))
+    }
+    if (subcategory.length > 0) {
+      productsCopy = productsCopy.filter((product) => subcategory.includes(product.subCategory))
+    }
+    setFilteredProducts(productsCopy)
+  }
+
+  const sortProducts = () => {
+    let fpCopy = filteredProducts.slice()
+    switch (sortType) {
+      case 'low-high':
+        setFilteredProducts(fpCopy.sort((a, b) => a.price - b.price))
+        break
+      case 'high-low':
+        setFilteredProducts(fpCopy.sort((a, b) => b.price - a.price))
+        break
+      default:
+        applyFilter()
+        break
+    }
+  }
+
+  useEffect(() => {
+    console.log(category, subcategory)
+    applyFilter()
+  }, [category, subcategory])
+
+  useEffect(() => {
+    sortProducts()
+  }, [sortType])
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10">
@@ -36,13 +92,13 @@ const Collection = () => {
             <p className="mb-3 text-sm font-medium">Categories</p>
             <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
               <p className="flex gap-2">
-                <input type="checkbox" value={'Men'} className="w-3" /> Men
+                <input type="checkbox" value={'Men'} className="w-3" onChange={toggleCat} /> Men
               </p>
               <p className="flex gap-2">
-                <input type="checkbox" value={'Women'} className="w-3" /> Women
+                <input type="checkbox" value={'Women'} className="w-3" onChange={toggleCat} /> Women
               </p>
               <p className="flex gap-2">
-                <input type="checkbox" value={'Kids'} className="w-3" /> Kids
+                <input type="checkbox" value={'Kids'} className="w-3" onChange={toggleCat} /> Kids
               </p>
             </div>
           </div>
@@ -55,19 +111,40 @@ const Collection = () => {
             <p className="mb-3 text-sm font-medium">Type</p>
             <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
               <p className="flex gap-2">
-                <input type="checkbox" value={'Topwear'} className="w-3" />
+                <input type="checkbox" value={'Topwear'} className="w-3" onChange={toggleSubCat} />
                 Topwear
               </p>
               <p className="flex gap-2">
-                <input type="checkbox" value={'Bottomwear'} className="w-3" />
+                <input type="checkbox" value={'Bottomwear'} className="w-3" onChange={toggleSubCat} />
                 Bottomwear
               </p>
               <p className="flex gap-2">
-                <input type="checkbox" value={'Winterwear'} className="w-3" />
+                <input type="checkbox" value={'Winterwear'} className="w-3" onChange={toggleSubCat} />
                 Winterwear
               </p>
             </div>
           </div>
+        </div>
+        {/* right side */}
+      </div>
+      <div className="flex-1">
+        <div className="flex justify-between text-base sm:text-2xl mb-4">
+          <Title t1="all" t2="collection" />
+          {/* product sort */}
+          <div className="flex items-center gap-2">
+            <p className="hidden sm:block text-base">Sort by:</p>
+            <select onChange={(e) => setSortType(e.target.value)} className="border border-gray-300 text-base rounded-sm" aria-placeholder="sort by">
+              <option value="relevant">Relevant</option>
+              <option value="low-high">Low to high</option>
+              <option value="high-low">High to low</option>
+            </select>
+          </div>
+        </div>
+        {/* map products */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+          {filteredProducts.map((product, index) => (
+            <ProductItem key={index} {...product} />
+          ))}
         </div>
       </div>
     </div>
