@@ -8,6 +8,7 @@ import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import PlaceOrder from "./pages/PlaceOrder";
 import Product from "./pages/Product";
+import Footer from "./components/Footer";
 
 import Navbar from "./components/Navbar";
 import "./App.css";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/place-order" element={<PlaceOrder />} />
           <Route path="/product/:productId" element={<Product />} />
         </Routes>
+        <Footer />
       </div>
     </ShopContextProvider>
   );
