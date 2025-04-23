@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../contexts/ShopContext'
 import classNames from 'classnames'
-import { assets } from '../../public/assets/frontend_assets/assets'
+import { assets } from '../assets/frontend_assets/assets'
 import Title from '../components/Title'
 import ProductItem from '../components/ProductItem'
 
 const Collection = () => {
-  const { products } = useContext(ShopContext)
+  const { products, search, showSearch } = useContext(ShopContext)
   const [showFilter, setShowFilter] = useState(false)
   const [filteredProducts, setFilteredProducts] = useState([])
   const [category, setCategory] = useState([])
@@ -30,6 +30,9 @@ const Collection = () => {
 
   const applyFilter = () => {
     let productsCopy = products.slice()
+
+    showSearch && search ? (productsCopy = productsCopy.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))) : null
+
     if (category.length > 0) {
       productsCopy = productsCopy.filter((product) => category.includes(product.category))
     }
@@ -57,7 +60,7 @@ const Collection = () => {
   useEffect(() => {
     console.log(category, subcategory)
     applyFilter()
-  }, [category, subcategory])
+  }, [category, subcategory, search])
 
   useEffect(() => {
     sortProducts()
@@ -145,6 +148,9 @@ const Collection = () => {
           {filteredProducts.map((product, index) => (
             <ProductItem key={index} {...product} />
           ))}
+          {filteredProducts.length === 0 && (
+            <div className="col-span-2 md:col-span-3 lg:col-span-4 text-center text-gray-500 text-lg">No products found</div>
+          )}
         </div>
       </div>
     </div>

@@ -1,25 +1,26 @@
-import { useContext, useReducer, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Collection from "./pages/Collection";
-import Orders from "./pages/Orders";
-import Login from "./pages/Login";
-import PlaceOrder from "./pages/PlaceOrder";
-import Product from "./pages/Product";
-import Footer from "./components/Footer";
+import { useContext, useReducer, useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Collection from './pages/Collection'
+import Orders from './pages/Orders'
+import Login from './pages/Login'
+import PlaceOrder from './pages/PlaceOrder'
+import Product from './pages/Product'
+import Footer from './components/Footer'
 
-import Navbar from "./components/Navbar";
-import "./App.css";
-import ShopContextProvider from "./contexts/ShopContext";
+import Navbar from './components/Navbar'
+import './App.css'
+import ShopContextProvider from './contexts/ShopContext'
+import SearchBar from './components/SearchBar'
 
 function App() {
   return (
     <ShopContextProvider>
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
         <Navbar />
-
+        <SearchBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -33,7 +34,7 @@ function App() {
         <Footer />
       </div>
     </ShopContextProvider>
-  );
+  )
 }
 
-export default App;
+export default App
