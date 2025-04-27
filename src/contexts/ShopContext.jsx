@@ -4,17 +4,11 @@ import reducer from './Reducer'
 
 export const ShopContext = createContext()
 
-const ShopContextProvider = ({ value, children }) => {
+const ShopContextProvider = ({ actions, state, dispatch, children }) => {
   const currency = '$'
   const delivery_fee = 10
   const [search, setSearch] = useState('')
   const [showSearch, setShowSearch] = useState(false)
-
-  const initialState = {
-    cartProductsCount: 69,
-  }
-
-  const [state, dispatch] = useReducer(reducer, initialState)
 
   const values = {
     products,
@@ -26,6 +20,7 @@ const ShopContextProvider = ({ value, children }) => {
     setSearch,
     showSearch,
     setShowSearch,
+    actions,
   }
 
   return <ShopContext.Provider value={values}>{children}</ShopContext.Provider>

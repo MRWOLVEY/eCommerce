@@ -1,17 +1,19 @@
 import React, { useEffect, useContext, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { ShopContext } from '../contexts/ShopContext'
 import { assets } from '../assets/frontend_assets/assets'
 import RelatedProducts from '../components/RelatedProducts'
+import { toast } from 'react-toastify'
 
 const Product = () => {
   const { productId } = useParams()
-  const { products, currency } = useContext(ShopContext)
+  const { products, currency, state, dispatch, actions } = useContext(ShopContext)
   const [productData, setProductData] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [image, setImage] = useState('')
   const [size, setSize] = useState('')
+  const location = useLocation()
 
   const fetchProduct = async () => {
     setLoading(true)
@@ -29,10 +31,18 @@ const Product = () => {
     fetchProduct()
   }, [productId, products])
 
+  useEffect(() => {
+    setSize('')
+  }, [location])
+
+  const handleAddToCart = (data, size) => {
+    size ? dispatch({ type: actions.addToCart, payload: { id: data._id, price: data.price, size: size } }) : toast.error('Please select a size')
+  }
+
   return loading ? (
     <div className="col-span-2 md:col-span-3 lg:col-span-4 text-center text-gray-500 text-lg">loading</div>
   ) : productData ? (
-    <div className=" pt-10 transition-opacity ease-in duration-500 opacity-100">
+    <div className="pt-10 transition-opacity ease-in duration-500 opacity-100">
       {/* product data */}
       <div className="flex gap-12 flex-col sm:flex-row">
         {/* product image */}
@@ -78,7 +88,12 @@ const Product = () => {
               ))}
             </div>
           </div>
-          <button className="bg-black text-white text-xs px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-500">Add To Cart</button>
+          <button
+            onClick={() => handleAddToCart(productData, size)}
+            className="bg-black text-white text-xs px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-500"
+          >
+            Add To Cart
+          </button>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <p>100% Original Product</p>
