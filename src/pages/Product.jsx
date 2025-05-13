@@ -35,6 +35,10 @@ const Product = () => {
     setSize('')
   }, [location])
 
+  useEffect(() => {
+    console.log('state', state)
+  }, [state])
+
   const handleAddToCart = (data, size) => {
     size ? dispatch({ type: actions.addToCart, payload: { id: data._id, price: data.price, size: size } }) : toast.error('Please select a size')
   }
@@ -90,7 +94,7 @@ const Product = () => {
           </div>
           <button
             onClick={() => handleAddToCart(productData, size)}
-            className="bg-black text-white text-xs px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-500"
+            className="bg-black hover:opacity-85 text-white text-xs px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-500"
           >
             Add To Cart
           </button>

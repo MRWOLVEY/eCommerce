@@ -9,6 +9,7 @@ import Login from './pages/Login'
 import PlaceOrder from './pages/PlaceOrder'
 import Product from './pages/Product'
 import Footer from './components/Footer'
+import Cart from './pages/Cart'
 
 import Navbar from './components/Navbar'
 import './App.css'
@@ -23,16 +24,20 @@ function App() {
   const initialState = {
     cartProductsCount: 0,
     cart: {},
+    total: 0,
   }
   const actions = {
     addToCart: 'ADD_TO_CART',
     removeFromCart: 'REMOVE_FROM_CART',
+    updateQuantity: 'UPDATE_QUANTITY',
+    clearCart: 'CLEAR_CART',
+    updateTotal: 'UPDATE_TOTAL',
   }
 
   const [state, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    toast.error('testing :)')
+    // toast.error('testing :)')
   }, [])
 
   return (
@@ -50,6 +55,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/place-order" element={<PlaceOrder />} />
           <Route path="/product/:productId" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
         <Footer />
       </div>
