@@ -51,7 +51,7 @@ const Cart = () => {
         <Title t1={'your'} t2={'cart'} />
         {state.cartProductsCount == 0 ? <p className="text-gray-500">Your cart is empty</p> : null}
         {cartData.map((item, index) => {
-          console.log('item', item)
+          // console.log('item', item)
           return (
             <div
               key={index}

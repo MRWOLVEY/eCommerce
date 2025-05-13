@@ -35,9 +35,9 @@ const Product = () => {
     setSize('')
   }, [location])
 
-  useEffect(() => {
-    console.log('state', state)
-  }, [state])
+  // useEffect(() => {
+  //   console.log('state', state)
+  // }, [state])
 
   const handleAddToCart = (data, size) => {
     size ? dispatch({ type: actions.addToCart, payload: { id: data._id, price: data.price, size: size } }) : toast.error('Please select a size')
