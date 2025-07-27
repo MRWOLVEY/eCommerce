@@ -16,7 +16,7 @@ const Contact = () => {
           <p className="font-semibold text-xl text-gray-600">Our Store</p>
           <p className="text-gray-500">Address: 123 Street, New York, USA</p>
           <p className="text-gray-500">
-            Phone: +1 234 567 890 <br /> Email: admin@store.com
+            Phone: +1 234 567 890 <br /> Email: contact@forever.com
           </p>
           <p className="text-gray-500 font-semibold text-xl">Careers</p>
           <p className="text-gray-500">expolre our team and positions</p>
